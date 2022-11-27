@@ -44,7 +44,7 @@ function convertCurrencies() {
     if (convertionRequest.status === 200 && currencySelector.value !== null) {
       const data = JSON.parse(convertionRequest.response);
       output.value = (
-        +input.value * data[currencySelector.value.toLowerCase()].inverseRate
+        +input.value * data[currencySelector.value.toLowerCase()].rate
       ).toFixed(2);
     } else {
       alert("Error occured");
