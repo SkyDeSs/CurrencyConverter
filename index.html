@@ -13,23 +13,23 @@
   </head>
   <body>
     <div class="main">
-      <label> UAH </label>
+      <select id="first_currency_selector" name="first_currency_selector"> <!-- First currency selector-->
+        <option value='UAH' selected> Ukrainian Hryvnia </option> 
       <input
         id="first_value"
         type="number"
-        name="first_currency"
+        name="first_value"
         placeholder="Input"
-      />
-      <hr class="separator"> 
-      <select id="currency_select" name="currency_select"> 
-        <option value='null' selected> Please choose currency... </option>
+      /> <!-- Input -->
+      <img src="https://svgur.com/i/opC.svg" width="50px" height="50px"> 
+      <select id="second_currency_selector" name="second_currency_selector"> <!-- Second currency selector-->
       </select>
       <input
         id="second_value"
         type="number"
-        name="second_currency"
+        name="second_value"
         placeholder="Output"
-      />
+      /> <!-- Output -->
     </div>
     <script src="script.js"></script>
   </body>

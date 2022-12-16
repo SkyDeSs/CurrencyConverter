@@ -13,7 +13,7 @@ body {
 .main {
   background-color: #fff;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 10px 25px;
   border-radius: 10px;
   align-items: center;
@@ -29,11 +29,4 @@ body {
 
 #second_value {
   margin: 25px 25px;
-}
-
-.separator {
-  border: 0;
-  width: 100%;
-  height: 1px;
-  background-image: linear-gradient(to right, #fff, #556270, #fff);
 }

@@ -1,54 +1,93 @@
-const input = document.querySelector("#first_value"),
-  output = document.querySelector("#second_value"),
-  currencySelector = document.querySelector("#currency_select");
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector("#first_value"),
+    output = document.querySelector("#second_value"),
+    firstCurrencySelector = document.querySelector("#first_currency_selector"),
+    secondCurrencySelector = document.querySelector(
+      "#second_currency_selector"
+    );
 
-function currenciesList() {
-  const currenciesRequest = new XMLHttpRequest();
+  input.addEventListener("input", conversion, false);
+  output.addEventListener("input", inverseConversion, false);
 
-  currenciesRequest.open("GET", "http://www.floatrates.com/daily/uah.json");
-  currenciesRequest.setRequestHeader("Content-Type", "application/json");
-  currenciesRequest.send();
+  function getCurrenciesList() {
+    const currenciesRequest = new XMLHttpRequest();
 
-  currenciesRequest.addEventListener("load", () => {
-    if (currenciesRequest.status === 200) {
-      const currenciesObj = JSON.parse(currenciesRequest.response);
-      const iterate = (obj) => {
-        Object.keys(obj).forEach((key) => {
-          if (key == "name") {
-            currencySelector.innerHTML += `<option value=${obj["code"]}> ${obj[key]} </option>`;
-          } else if (typeof obj[key] === "object" && obj[key] !== null) {
-            iterate(obj[key]);
-          }
-        });
-      };
-      iterate(currenciesObj);
-    } else {
-      alert("Error at loading currencies");
-    }
-  });
-}
+    currenciesRequest.open("GET", "http://www.floatrates.com/daily/uah.json");
+    currenciesRequest.setRequestHeader("Content-Type", "application/json");
+    currenciesRequest.send();
 
-currenciesList();
+    currenciesRequest.addEventListener("load", () => {
+      if (currenciesRequest.status === 200) {
+        const currenciesObj = JSON.parse(currenciesRequest.response);
+        const iterate = (obj) => {
+          Object.keys(obj).forEach((key) => {
+            if (key == "name") {
+              firstCurrencySelector.innerHTML += `<option value=${obj["code"]}> ${obj[key]} </option>`;
+              secondCurrencySelector.innerHTML += `<option value=${obj["code"]}> ${obj[key]} </option>`;
+            } else if (typeof obj[key] === "object" && obj[key] !== null) {
+              iterate(obj[key]);
+            }
+          });
+        };
+        iterate(currenciesObj);
+      } else {
+        alert("Error at loading currencies");
+      }
+    });
+  }
 
-input.addEventListener("input", convertCurrencies, false);
-currencySelector.addEventListener("change", convertCurrencies, false);
+  getCurrenciesList();
+
+  function conversion() {
+    const jsonRequest = new XMLHttpRequest();
+    jsonRequest.open(
+      "GET",
+      `http://www.floatrates.com/daily/${firstCurrencySelector.value}.json`
+    );
+    jsonRequest.setRequestHeader("Content-Type", "application/json");
+    jsonRequest.send();
+
+    jsonRequest.addEventListener("load", () => {
+      if (jsonRequest.status === 200) {
+        const currenciesObj = JSON.parse(jsonRequest.response);
+        output.value = (
+          +input.value *
+          currenciesObj[secondCurrencySelector.value.toLowerCase()].rate
+        ).toFixed(2);
+      } else {
+        alert("Error occured");
+      }
+    });
+  }
+
+  function inverseConversion() {
+    const jsonRequest = new XMLHttpRequest();
+    jsonRequest.open(
+      "GET",
+      `http://www.floatrates.com/daily/${firstCurrencySelector.value}.json`
+    );
+    jsonRequest.setRequestHeader("Content-Type", "application/json");
+    jsonRequest.send();
+  
+    jsonRequest.addEventListener("load", () => {
+      if (jsonRequest.status === 200) {
+        const currenciesObj = JSON.parse(jsonRequest.response);
+        input.value = (
+          +output.value *
+          currenciesObj[secondCurrencySelector.value.toLowerCase()].inverseRate
+        ).toFixed(2);
+      } else {
+        alert("Error occured");
+      }
+    });
+  }
+});
 
 
-function convertCurrencies() { 
-  const convertionRequest = new XMLHttpRequest();
-  convertionRequest.open("GET", "http://www.floatrates.com/daily/uah.json");
-  convertionRequest.setRequestHeader("Content-Type", "application/json");
-  convertionRequest.send();
+// function conversion() {
+//     output.value = (+input.value * currenciesObj[secondCurrencySelector.value.toLowerCase()].rate).toFixed(2);
+// };
 
-  convertionRequest.addEventListener("load", () => {
-    if (convertionRequest.status === 200 && currencySelector.value !== null) {
-      const data = JSON.parse(convertionRequest.response);
-      output.value = (
-        +input.value * data[currencySelector.value.toLowerCase()].rate
-      ).toFixed(2);
-    } else {
-      alert("Error occured");
-    }
-  });
-};
-
+// function inverseConversion() {
+//   output.value = (+input.value * currenciesObj[secondCurrencySelector.value.toLowerCase()].rate).toFixed(2);
+// };
