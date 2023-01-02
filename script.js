@@ -2,17 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.querySelector("#first_value"),
     output = document.querySelector("#second_value"),
     firstCurrencySelector = document.querySelector("#first_currency_selector"),
-    secondCurrencySelector = document.querySelector(
-      "#second_currency_selector"
-    );
+    secondCurrencySelector = document.querySelector("#second_currency_selector"),
+    swapButton = document.querySelector("#swap_button");
 
   input.addEventListener("input", conversion, false);
   output.addEventListener("input", inverseConversion, false);
+  swapButton.addEventListener("click", swapCurrency, false);
 
   function getCurrenciesList() {
     const currenciesRequest = new XMLHttpRequest();
 
-    currenciesRequest.open("GET", "http://www.floatrates.com/daily/uah.json");
+    currenciesRequest.open("GET", "https://www.floatrates.com/daily/uah.json");
     currenciesRequest.setRequestHeader("Content-Type", "application/json");
     currenciesRequest.send();
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const jsonRequest = new XMLHttpRequest();
     jsonRequest.open(
       "GET",
-      `http://www.floatrates.com/daily/${firstCurrencySelector.value}.json`
+      `https://www.floatrates.com/daily/${firstCurrencySelector.value}.json`
     );
     jsonRequest.setRequestHeader("Content-Type", "application/json");
     jsonRequest.send();
@@ -52,8 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currenciesObj = JSON.parse(jsonRequest.response);
         output.value = (
           +input.value *
-          currenciesObj[secondCurrencySelector.value.toLowerCase()].rate
-        ).toFixed(2);
+          currenciesObj[secondCurrencySelector.value.toLowerCase()].rate).toFixed(2);
       } else {
         alert("Error occured");
       }
@@ -64,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const jsonRequest = new XMLHttpRequest();
     jsonRequest.open(
       "GET",
-      `http://www.floatrates.com/daily/${firstCurrencySelector.value}.json`
+      `https://www.floatrates.com/daily/${firstCurrencySelector.value}.json`
     );
     jsonRequest.setRequestHeader("Content-Type", "application/json");
     jsonRequest.send();
@@ -74,20 +73,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const currenciesObj = JSON.parse(jsonRequest.response);
         input.value = (
           +output.value *
-          currenciesObj[secondCurrencySelector.value.toLowerCase()].inverseRate
-        ).toFixed(2);
+          currenciesObj[secondCurrencySelector.value.toLowerCase()].inverseRate).toFixed(2);
       } else {
         alert("Error occured");
       }
     });
   }
+
+  function swapCurrency() {
+    const choosedCurrencies = [firstCurrencySelector.value, secondCurrencySelector.value]
+    const puttedValues = [input.value, output.value]
+
+    firstCurrencySelector.value = choosedCurrencies[1];
+    secondCurrencySelector.value = choosedCurrencies[0];
+
+    input.value = puttedValues[1];
+    output.value = puttedValues[0];
+  }
+
 });
-
-
-// function conversion() {
-//     output.value = (+input.value * currenciesObj[secondCurrencySelector.value.toLowerCase()].rate).toFixed(2);
-// };
-
-// function inverseConversion() {
-//   output.value = (+input.value * currenciesObj[secondCurrencySelector.value.toLowerCase()].rate).toFixed(2);
-// };
