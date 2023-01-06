@@ -13,7 +13,8 @@
   </head>
   <body>
     <div class="main">
-      <select class='select-dropdown'id="first_currency_selector" name="first_currency_selector"> <!-- First currency selector-->
+      <div class="first">
+      <select id="first_currency_selector" name="first_currency_selector"> <!-- First currency selector-->
         <option value='UAH' selected> Ukrainian Hryvnia </option> 
       <input
         id="first_value"
@@ -21,7 +22,11 @@
         name="first_value"
         placeholder="Input"
       /> <!-- Input -->
-      <img id="swap_button" src="https://svgur.com/i/opC.svg" width="50px" height="50px"/>
+    </div>
+      <button class="swap-button" type="button">
+        <img src="https://svgshare.com/i/pND.svg"/>
+      </button>
+      <div class="second">
       <select id="second_currency_selector" name="second_currency_selector"> <!-- Second currency selector-->
         <option value='UAH'> Ukrainian Hryvnia </option>  
       </select>
@@ -31,6 +36,7 @@
         name="second_value"
         placeholder="Output"
       /> <!-- Output -->
+    </div>
     </div>
     <script src="script.js"></script>
   </body>

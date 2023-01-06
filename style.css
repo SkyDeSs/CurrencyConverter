@@ -3,31 +3,77 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 body {
-  background: linear-gradient(to left, #556270, #4ECDC4); 
+  background: linear-gradient(to right bottom, #BBD2C5, #536976); 
 }
 
 .main {
   background-color: #fff;
-  display: flex;
-  flex-direction: row;
+  display: inline;
   padding: 10px 25px;
   border-radius: 10px;
   align-items: center;
+  box-shadow: 0px 0px 10px rgb(90, 90, 90);
+}
+
+.swap-button {
+  width: 48px;
+  height: 48px;
+  outline: none;
+  background: #fff;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 0px;
+  box-shadow: 0px 0px 10px rgb(194, 194, 194);
+  transition: background 0.2s;
+  margin: 20px auto;
+}
+
+.swap-button:hover {
+  background: rgb(236, 236, 236);
+  outline: none;
+  transition:  background-color 0.3s;
+}
+
+.swap-button:focus {
+  outline: none;
 }
 
 #currency_select {
   width: 70%;
 }
 
-#first_value {
-  margin: 0 25px;
+#first_value, #second_value  {
+  outline: none;
 }
 
-#second_value {
-  margin: 25px 25px;
+#first_currency_selector, #second_currency_selector, #first_value, #second_value {
+  border: 0; 
+  padding: 7px 0; 
+  border-bottom: 1px solid #ccc;
 }
 
+#first_value ~ .focus-border {
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  width: 0; 
+  height: 2px; 
+  background-color: #4caf50; 
+  transition: 0.4s;
+}
+
+#first_value:focus ~ .focus-border {
+  width: 100%; 
+  transition: 0.4s;
+}
+
+.first, .second {
+  display: flex;
+  flex-direction: column;
+}

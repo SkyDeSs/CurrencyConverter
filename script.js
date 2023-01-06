@@ -3,13 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     output = document.querySelector("#second_value"),
     firstCurrencySelector = document.querySelector("#first_currency_selector"),
     secondCurrencySelector = document.querySelector("#second_currency_selector"),
-    swapButton = document.querySelector("#swap_button");
+    swapButton = document.querySelector(".swap-button");
 
   input.addEventListener("input", conversion, false);
   output.addEventListener("input", inverseConversion, false);
   swapButton.addEventListener("click", swapCurrency, false);
 
   function getCurrenciesList() {
+    const currenciesArr = [];
     const currenciesRequest = new XMLHttpRequest();
 
     currenciesRequest.open("GET", "https://www.floatrates.com/daily/uah.json");
@@ -22,8 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const iterate = (obj) => {
           Object.keys(obj).forEach((key) => {
             if (key == "name") {
-              firstCurrencySelector.innerHTML += `<option value=${obj["code"]}> ${obj[key]} </option>`;
-              secondCurrencySelector.innerHTML += `<option value=${obj["code"]}> ${obj[key]} </option>`;
+              currenciesArr.push({name: obj[key], code: obj['code']});
             } else if (typeof obj[key] === "object" && obj[key] !== null) {
               iterate(obj[key]);
             }
@@ -33,6 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Error at loading currencies");
       }
+      const sortCurrenciesArr = (arr) => {
+        arr.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+      };
+      sortCurrenciesArr(currenciesArr);
+      currenciesArr.forEach((elem) => {
+        firstCurrencySelector.innerHTML += `<option value=${elem["code"]}> ${elem["name"]} </option>`;
+        secondCurrencySelector.innerHTML += `<option value=${elem["code"]}> ${elem["name"]} </option>`;
+      });
     });
   }
 
