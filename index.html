@@ -12,6 +12,7 @@
     />
   </head>
   <body>
+    <div id="bg">
     <div class="main">
       <div class="first">
       <select id="first_currency_selector" name="first_currency_selector"> <!-- First currency selector-->
@@ -42,13 +43,29 @@
   <!-- Trigger modal -->
   <button id="info-button" type="button"> <img src="https://svgshare.com/i/pPR.svg" width="32px" height="32px"/> </button>
 
-  <div id="modal-disclaimer">
+  <div id="modal-disclaimer">   <!-- Disclaimer -->
     <div class="modal-text">
       <span class="close-modal">&times;</span>
       <h5 class="disc-header"> CURRENCY DISCLAIMER </h5>
-      <p>The accuracy of the exchange rates and results of the calculator cannot be guaranteed. Do not take any decision based on the results or content of this website! Always confirm actual currency rates with a bank before making transactions! Rates on this website are for information purposes only and are subject to change without notice. Rates on this website are no offer at all for a transaction. We are not liable for the content of externally linked websites.</p>
+      <p>The accuracy of the exchange rates and results of the calculator cannot be guaranteed. 
+        Do not take any decision based on the results or content of this website! 
+        Always confirm actual currency rates with a bank before making transactions! 
+        Rates on this website are for information purposes only and are subject to change without notice. 
+        Rates on this website are no offer at all for a transaction. 
+        Author are not liable for the exchange rates given on this site.
+        Exchange rates are taken from the resource <a href="https://www.floatrates.com/">Floatrates.</a></p>
     </div>
+</div>
+
+<footer>
+
+<p> Created by <a href='https://github.com/SkyDeSs'> @SkyDeSs </a> </p>
+
+</footer>
 
     <script src="script.js"></script>
+    <script src="three.min.js"></script>
+    <script src="vanta.net.min.js"></script>
+    <script src="bg_vanta.js"></script>
   </body>
 </html>

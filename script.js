@@ -111,13 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
     output.value = puttedValues[0];
   }
 
-  function toggleDisclaimer() {
+  function toggleDisclaimer(event) {
     disclaimerModal.style.display == "block"
       ? (disclaimerModal.style.display = "none")
       : (disclaimerModal.style.display = "block");
   }
 
-  window.onclick = function(event) {
+  document.onclick = function(event) {
     if (event.target == disclaimerModal) {
       disclaimerModal.style.display = "none";
     }}

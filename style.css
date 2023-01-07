@@ -1,5 +1,6 @@
-html, body {
+html, body, #bg {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,12 +11,12 @@ body {
 }
 
 .main {
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   display: inline;
   padding: 10px 25px;
   border-radius: 10px;
   align-items: center;
-  box-shadow: 0px 0px 10px rgb(90, 90, 90);
+  box-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
 
 .swap-button {
@@ -106,6 +107,8 @@ body {
   top: 0;
   width: 100%; 
   height: 100%; 
+  overflow: auto;
+  border-radius: 10px;
   background-color: rgba(0,0,0,0.4); 
 }
 
@@ -136,4 +139,21 @@ body {
 
 .disc-header {
   text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.116);
+  color: white;
+  text-align: center;
+  vertical-align:baseline;
+}
+
+footer > p {
+  margin: 0 auto;
+  color: #ffffff85;
+  font-size: 10pt;
 }
