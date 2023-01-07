@@ -2,12 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.querySelector("#first_value"),
     output = document.querySelector("#second_value"),
     firstCurrencySelector = document.querySelector("#first_currency_selector"),
-    secondCurrencySelector = document.querySelector("#second_currency_selector"),
-    swapButton = document.querySelector(".swap-button");
+    secondCurrencySelector = document.querySelector(
+      "#second_currency_selector"
+    ),
+    swapButton = document.querySelector(".swap-button"),
+    infoButton = document.querySelector("#info-button"),
+    disclaimerModal = document.querySelector("#modal-disclaimer"),
+    closeButton = document.querySelector(".close-modal");
 
   input.addEventListener("input", conversion, false);
   output.addEventListener("input", inverseConversion, false);
   swapButton.addEventListener("click", swapCurrency, false);
+  infoButton.addEventListener("click", toggleDisclaimer, false);
+  closeButton.addEventListener("click", toggleDisclaimer, false);
 
   function getCurrenciesList() {
     const currenciesArr = [];
@@ -23,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const iterate = (obj) => {
           Object.keys(obj).forEach((key) => {
             if (key == "name") {
-              currenciesArr.push({name: obj[key], code: obj['code']});
+              currenciesArr.push({ name: obj[key], code: obj["code"] });
             } else if (typeof obj[key] === "object" && obj[key] !== null) {
               iterate(obj[key]);
             }
@@ -34,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Error at loading currencies");
       }
       const sortCurrenciesArr = (arr) => {
-        arr.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+        arr.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
       };
       sortCurrenciesArr(currenciesArr);
       currenciesArr.forEach((elem) => {
@@ -60,7 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const currenciesObj = JSON.parse(jsonRequest.response);
         output.value = (
           +input.value *
-          currenciesObj[secondCurrencySelector.value.toLowerCase()].rate).toFixed(2);
+          currenciesObj[secondCurrencySelector.value.toLowerCase()].rate
+        ).toFixed(2);
       } else {
         alert("Error occured");
       }
@@ -75,13 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     jsonRequest.setRequestHeader("Content-Type", "application/json");
     jsonRequest.send();
-  
+
     jsonRequest.addEventListener("load", () => {
       if (jsonRequest.status === 200) {
         const currenciesObj = JSON.parse(jsonRequest.response);
         input.value = (
           +output.value *
-          currenciesObj[secondCurrencySelector.value.toLowerCase()].inverseRate).toFixed(2);
+          currenciesObj[secondCurrencySelector.value.toLowerCase()].inverseRate
+        ).toFixed(2);
       } else {
         alert("Error occured");
       }
@@ -89,8 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function swapCurrency() {
-    const choosedCurrencies = [firstCurrencySelector.value, secondCurrencySelector.value]
-    const puttedValues = [input.value, output.value]
+    const choosedCurrencies = [
+      firstCurrencySelector.value,
+      secondCurrencySelector.value,
+    ];
+    const puttedValues = [input.value, output.value];
 
     firstCurrencySelector.value = choosedCurrencies[1];
     secondCurrencySelector.value = choosedCurrencies[0];
@@ -99,4 +111,15 @@ document.addEventListener("DOMContentLoaded", () => {
     output.value = puttedValues[0];
   }
 
+  function toggleDisclaimer() {
+    disclaimerModal.style.display == "block"
+      ? (disclaimerModal.style.display = "none")
+      : (disclaimerModal.style.display = "block");
+  }
+
+  window.onclick = function(event) {
+    if (event.target == disclaimerModal) {
+      disclaimerModal.style.display = "none";
+    }}
+  
 });
